@@ -16,6 +16,11 @@ from .providers import build_provider
 logger = logging.getLogger("aria.pipeline")
 
 
+def email_key(email: EmailMessage) -> str:
+    """Stable cross-mailbox identifier used for de-duplication / state."""
+    return f"{email.provider.value}:{email.id}"
+
+
 @dataclass
 class RunOptions:
     providers: list[Provider] | None = None
@@ -25,6 +30,7 @@ class RunOptions:
     use_ai: bool = False
     dry_run: bool = True
     purge: bool = False
+    skip_ids: set[str] | None = None  # email_key()s already processed (watch mode)
 
 
 @dataclass
@@ -67,6 +73,8 @@ def run(config: Config, options: RunOptions) -> RunResult:
                 logger.error("Failed to fetch from %s: %s", provider_enum.value, exc)
 
     all_emails = [e for emails in emails_by_provider.values() for e in emails]
+    if options.skip_ids:
+        all_emails = [e for e in all_emails if email_key(e) not in options.skip_ids]
     if not all_emails:
         return result
 

@@ -50,6 +50,8 @@ class Config:
     max_results: int = 50
     confidence_threshold: float = 0.6
     vip_senders: list[str] = field(default_factory=list)
+    watch_interval: int = 300
+    state_file: str = "aria_state.json"
     gmail: GmailConfig = field(default_factory=GmailConfig)
     outlook: OutlookConfig = field(default_factory=OutlookConfig)
     ai: AIConfig = field(default_factory=AIConfig)
@@ -72,6 +74,8 @@ class Config:
             max_results=int(os.getenv("ARIA_MAX_RESULTS", "50")),
             confidence_threshold=float(os.getenv("ARIA_CONFIDENCE_THRESHOLD", "0.6")),
             vip_senders=[s.lower() for s in _split_csv(os.getenv("ARIA_VIP_SENDERS"))],
+            watch_interval=int(os.getenv("ARIA_WATCH_INTERVAL", "300")),
+            state_file=os.getenv("ARIA_STATE_FILE", "aria_state.json"),
             gmail=GmailConfig(
                 credentials_file=os.getenv("GMAIL_CREDENTIALS_FILE", "credentials.json"),
                 token_file=os.getenv("GMAIL_TOKEN_FILE", "gmail_token.json"),
