@@ -61,6 +61,11 @@ class GmailProvider(EmailProvider):
                 fh.write(creds.to_json())
         return build("gmail", "v1", credentials=creds, cache_discovery=False)
 
+    def whoami(self) -> str:
+        profile = self.service.users().getProfile(userId="me").execute()
+        total = profile.get("messagesTotal", "?")
+        return f"{profile.get('emailAddress')} ({total} messages total)"
+
     # --- fetch ----------------------------------------------------------
 
     def fetch(

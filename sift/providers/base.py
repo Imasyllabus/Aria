@@ -35,3 +35,11 @@ class EmailProvider(ABC):
     @abstractmethod
     def delete(self, email: EmailMessage) -> None:
         """Permanently delete the message (NOT recoverable)."""
+
+    def whoami(self) -> str:
+        """Force authentication and return a human-readable account identifier.
+
+        The default verifies read access by listing one message; providers may
+        override to report the account address."""
+        self.fetch(max_results=1)
+        return f"{self.name.value} (connected)"

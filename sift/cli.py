@@ -66,6 +66,11 @@ def build_parser() -> argparse.ArgumentParser:
     w.add_argument("--confidence", type=float, default=None)
     w.add_argument("--model", default=None, help="Override the Claude model id.")
     w.add_argument("-v", "--verbose", action="store_true", help="Verbose logging.")
+
+    a = sub.add_parser("auth", help="Connect a mailbox (runs OAuth) and confirm the account.")
+    a.add_argument("--provider", choices=["gmail", "outlook", "both"], default=None,
+                   help="Which mailbox(es) to connect (default: from SIFT_PROVIDERS).")
+    a.add_argument("-v", "--verbose", action="store_true", help="Verbose logging.")
     return parser
 
 
@@ -85,11 +90,15 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     config = Config.from_env()
+
+    if args.command == "auth":
+        return _cmd_auth(args, config)
+
+    # run / watch share these overrides and the AI-key precondition.
     if args.confidence is not None:
         config.confidence_threshold = args.confidence
     if args.model is not None:
         config.ai.model = args.model
-
     if args.ai and not config.ai.api_key:
         print("--ai requires ANTHROPIC_API_KEY to be set.", file=sys.stderr)
         return 2
@@ -99,6 +108,25 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "run":
         return _cmd_run(args, config)
     return 1
+
+
+def _cmd_auth(args, config: Config) -> int:
+    from .providers import build_provider
+
+    providers = _resolve_providers(args.provider, config) or config.providers
+    if not providers:
+        print("No providers configured. Set SIFT_PROVIDERS or pass --provider.", file=sys.stderr)
+        return 2
+
+    failed = False
+    for provider in providers:
+        try:
+            who = build_provider(provider, config).whoami()
+            print(f"{provider.value}: connected — {who}")
+        except Exception as exc:
+            failed = True
+            print(f"{provider.value}: NOT connected — {exc}", file=sys.stderr)
+    return 1 if failed else 0
 
 
 def _cmd_run(args, config: Config) -> int:
