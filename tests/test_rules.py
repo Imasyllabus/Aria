@@ -1,5 +1,5 @@
-from aria.classify.rules import classify_rules
-from aria.models import Action, Category, Importance
+from sift.classify.rules import classify_rules
+from sift.models import Action, Category, Importance
 
 from .conftest import make_email
 

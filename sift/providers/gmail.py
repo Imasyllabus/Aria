@@ -15,7 +15,7 @@ _SCOPES = {
     "modify": ["https://www.googleapis.com/auth/gmail.modify"],
     "full": ["https://mail.google.com/"],
 }
-_CATEGORY_LABEL_PREFIX = "Aria/"
+_CATEGORY_LABEL_PREFIX = "Sift/"
 
 
 class GmailProvider(EmailProvider):

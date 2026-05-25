@@ -1,5 +1,5 @@
-from aria.models import Provider
-from aria.util import html_to_text, parse_address, truncate
+from sift.models import Provider
+from sift.util import html_to_text, parse_address, truncate
 
 from .conftest import make_email
 

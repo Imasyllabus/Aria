@@ -13,7 +13,7 @@ from .config import Config
 from .models import ActionResult, ClassifiedEmail, EmailMessage, Provider
 from .providers import build_provider
 
-logger = logging.getLogger("aria.pipeline")
+logger = logging.getLogger("sift.pipeline")
 
 
 def email_key(email: EmailMessage) -> str:
@@ -53,7 +53,7 @@ def _fetch_one(provider_enum: Provider, config: Config, options: RunOptions):
 def run(config: Config, options: RunOptions) -> RunResult:
     providers = options.providers or config.providers
     if not providers:
-        raise ValueError("No providers configured. Set ARIA_PROVIDERS or pass --provider.")
+        raise ValueError("No providers configured. Set SIFT_PROVIDERS or pass --provider.")
 
     result = RunResult()
     provider_clients: dict[Provider, object] = {}

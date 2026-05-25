@@ -20,7 +20,7 @@ from datetime import datetime
 from .config import Config
 from .pipeline import RunOptions, RunResult, email_key, run
 
-logger = logging.getLogger("aria.watch")
+logger = logging.getLogger("sift.watch")
 
 
 def load_state(path: str) -> set[str]:

@@ -1,8 +1,8 @@
-import aria.pipeline as pipeline
-from aria.config import Config, GmailConfig
-from aria.pipeline import RunOptions, email_key, run
-from aria.watch import load_state, save_state, watch
-from aria.models import Provider
+import sift.pipeline as pipeline
+from sift.config import Config, GmailConfig
+from sift.pipeline import RunOptions, email_key, run
+from sift.watch import load_state, save_state, watch
+from sift.models import Provider
 
 from .conftest import make_email
 

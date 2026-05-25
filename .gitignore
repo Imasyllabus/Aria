@@ -20,7 +20,7 @@ outlook_token_cache.json
 *.token
 
 # Watch-mode state
-aria_state.json
+sift_state.json
 *.state.json
 
 # Tooling

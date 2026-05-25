@@ -14,7 +14,7 @@ import logging
 from .models import Action, ActionResult, ClassifiedEmail
 from .providers.base import EmailProvider
 
-logger = logging.getLogger("aria.actions")
+logger = logging.getLogger("sift.actions")
 
 
 def apply_actions(

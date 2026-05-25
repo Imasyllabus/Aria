@@ -9,7 +9,7 @@ from ..models import ClassifiedEmail, EmailMessage
 from .ai import AIClassifier
 from .rules import classify_rules
 
-logger = logging.getLogger("aria.engine")
+logger = logging.getLogger("sift.engine")
 
 
 class HybridClassifier:

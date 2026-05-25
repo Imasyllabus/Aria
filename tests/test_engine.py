@@ -1,5 +1,5 @@
-from aria.classify.engine import HybridClassifier
-from aria.models import Action, Category, Classification, Importance
+from sift.classify.engine import HybridClassifier
+from sift.models import Action, Category, Classification, Importance
 
 from .conftest import make_email
 

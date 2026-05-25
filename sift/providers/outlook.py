@@ -13,7 +13,7 @@ from .base import EmailProvider
 
 _GRAPH = "https://graph.microsoft.com/v1.0"
 _SCOPES = ["Mail.ReadWrite"]
-_CATEGORY_PREFIX = "Aria: "
+_CATEGORY_PREFIX = "Sift: "
 _SELECT = (
     "id,conversationId,subject,from,toRecipients,bodyPreview,body,"
     "receivedDateTime,isRead,categories,internetMessageHeaders"

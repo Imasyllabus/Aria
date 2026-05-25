@@ -1,4 +1,4 @@
-"""Command-line entry point for Aria."""
+"""Command-line entry point for Sift."""
 
 from __future__ import annotations
 
@@ -15,16 +15,16 @@ from .report import render_json, render_text
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="aria",
+        prog="sift",
         description="Triage Gmail + Outlook: classify, prioritize, categorize, clean up.",
     )
-    parser.add_argument("--version", action="version", version=f"aria {__version__}")
+    parser.add_argument("--version", action="version", version=f"sift {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     r = sub.add_parser("run", help="Fetch, classify, and (optionally) act on mail.")
     r.add_argument(
         "--provider", choices=["gmail", "outlook", "both"], default=None,
-        help="Which mailbox(es) to read (default: from ARIA_PROVIDERS).",
+        help="Which mailbox(es) to read (default: from SIFT_PROVIDERS).",
     )
     r.add_argument("--max", type=int, default=None, help="Max messages per mailbox.")
     r.add_argument("--unread-only", action="store_true", help="Only unread messages.")

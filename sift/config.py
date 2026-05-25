@@ -51,7 +51,7 @@ class Config:
     confidence_threshold: float = 0.6
     vip_senders: list[str] = field(default_factory=list)
     watch_interval: int = 300
-    state_file: str = "aria_state.json"
+    state_file: str = "sift_state.json"
     gmail: GmailConfig = field(default_factory=GmailConfig)
     outlook: OutlookConfig = field(default_factory=OutlookConfig)
     ai: AIConfig = field(default_factory=AIConfig)
@@ -61,21 +61,21 @@ class Config:
         _load_dotenv()
 
         providers: list[Provider] = []
-        for name in _split_csv(os.getenv("ARIA_PROVIDERS", "gmail,outlook")):
+        for name in _split_csv(os.getenv("SIFT_PROVIDERS", "gmail,outlook")):
             try:
                 providers.append(Provider(name.lower()))
             except ValueError:
                 raise ValueError(
-                    f"Unknown provider {name!r} in ARIA_PROVIDERS (use 'gmail' and/or 'outlook')."
+                    f"Unknown provider {name!r} in SIFT_PROVIDERS (use 'gmail' and/or 'outlook')."
                 )
 
         return cls(
             providers=providers,
-            max_results=int(os.getenv("ARIA_MAX_RESULTS", "50")),
-            confidence_threshold=float(os.getenv("ARIA_CONFIDENCE_THRESHOLD", "0.6")),
-            vip_senders=[s.lower() for s in _split_csv(os.getenv("ARIA_VIP_SENDERS"))],
-            watch_interval=int(os.getenv("ARIA_WATCH_INTERVAL", "300")),
-            state_file=os.getenv("ARIA_STATE_FILE", "aria_state.json"),
+            max_results=int(os.getenv("SIFT_MAX_RESULTS", "50")),
+            confidence_threshold=float(os.getenv("SIFT_CONFIDENCE_THRESHOLD", "0.6")),
+            vip_senders=[s.lower() for s in _split_csv(os.getenv("SIFT_VIP_SENDERS"))],
+            watch_interval=int(os.getenv("SIFT_WATCH_INTERVAL", "300")),
+            state_file=os.getenv("SIFT_STATE_FILE", "sift_state.json"),
             gmail=GmailConfig(
                 credentials_file=os.getenv("GMAIL_CREDENTIALS_FILE", "credentials.json"),
                 token_file=os.getenv("GMAIL_TOKEN_FILE", "gmail_token.json"),
@@ -88,8 +88,8 @@ class Config:
             ),
             ai=AIConfig(
                 api_key=os.getenv("ANTHROPIC_API_KEY", ""),
-                model=os.getenv("ARIA_AI_MODEL", "claude-opus-4-7"),
-                effort=os.getenv("ARIA_AI_EFFORT", "low").lower(),
-                batch_size=int(os.getenv("ARIA_AI_BATCH_SIZE", "20")),
+                model=os.getenv("SIFT_AI_MODEL", "claude-opus-4-7"),
+                effort=os.getenv("SIFT_AI_EFFORT", "low").lower(),
+                batch_size=int(os.getenv("SIFT_AI_BATCH_SIZE", "20")),
             ),
         )

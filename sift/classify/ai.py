@@ -6,7 +6,7 @@ Design notes (high-volume, cost-sensitive workload):
   * The taxonomy lives in a frozen `system` block with `cache_control` so the
     prefix is reused across requests (cache reads cost ~0.1x).
   * Structured outputs (`output_config.format`) guarantee parseable JSON.
-  * Defaults to claude-opus-4-7; set ARIA_AI_MODEL=claude-haiku-4-5 for the
+  * Defaults to claude-opus-4-7; set SIFT_AI_MODEL=claude-haiku-4-5 for the
     cheapest run. `effort` is only sent to models that support it.
 """
 
@@ -18,7 +18,7 @@ import logging
 from ..models import Action, Category, Classification, EmailMessage, Importance
 from ..util import truncate
 
-logger = logging.getLogger("aria.ai")
+logger = logging.getLogger("sift.ai")
 
 _IMPORTANCE_VALUES = [m.value for m in Importance]
 _CATEGORY_VALUES = [c.value for c in Category]

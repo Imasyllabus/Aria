@@ -1,6 +1,6 @@
 import datetime as _dt
 
-from aria.models import EmailMessage, Provider
+from sift.models import EmailMessage, Provider
 
 
 def make_email(
